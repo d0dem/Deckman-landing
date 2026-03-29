@@ -12,15 +12,16 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --green: #2d6a4f;
+      --green: #2D6A4F;
       --green-dark: #1b4332;
       --green-light: #40916c;
-      --green-cta: #52b788;
-      --cream: #f8f5f0;
-      --warm-gray: #f2ede8;
-      --text: #1a1a1a;
-      --text-muted: #5a5a5a;
-      --border: #ddd8d0;
+      --green-cta: #2D6A4F;
+      --cream: #E0F2E9;
+      --warm-gray: #F7F9F9;
+      --text: #0B0A07;
+      --text-muted: #4a4a46;
+      --border: #c8e0d2;
+      --accent: #5AA9E6;
       --white: #ffffff;
       --shadow: 0 4px 24px rgba(0,0,0,0.08);
       --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
@@ -56,7 +57,7 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      color: var(--green-dark);
+      color: #0B0A07;
       font-weight: 800;
       font-size: 1.25rem;
       letter-spacing: -0.5px;
@@ -150,7 +151,7 @@
     /* ── HERO ── */
     .hero {
       position: relative;
-      background: linear-gradient(135deg, var(--green-dark) 0%, #2d6a4f 50%, #1a3d2b 100%);
+      background: url("images/hero-deck.jpg") center/cover no-repeat;
       color: var(--white);
       padding: 80px 24px 90px;
       overflow: hidden;
@@ -160,8 +161,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: url("images/hero-deck.jpg") center/cover no-repeat;
-      opacity: 0.22;
+      background: linear-gradient(135deg, rgba(27,67,50,0.60) 0%, rgba(45,106,79,0.60) 50%, rgba(26,61,43,0.60) 100%);
     }
 
     .hero-inner {
@@ -842,7 +842,7 @@
   <!-- STICKY HEADER -->
   <header class="site-header">
     <a href="#" class="logo">
-      <img src="images/deckman-mascot.jpeg" alt="Deckman mascot" class="logo-icon" />
+      <img src="images/deckman-mascot.png" alt="Deckman mascot" class="logo-icon" />
       Deckman
     </a>
     <div class="header-right">
@@ -1111,7 +1111,7 @@
         </div>
 
         <div class="mascot-wrap">
-          <img src="images/deckman-mascot.jpeg" alt="Neil Paz – The Deckman" class="mascot-img" />
+          <img src="images/deckman-mascot.png" alt="Neil Paz – The Deckman" class="mascot-img" />
           <div class="mascot-bubble">
             "Fill out the form and I'll personally get back to you within 24 hours!"<br /><strong>— Neil</strong>
           </div>
@@ -1175,7 +1175,7 @@
       <div class="footer-top">
         <div class="footer-brand">
           <a href="#" class="logo">
-            <img src="images/deckman-mascot.jpeg" alt="Deckman" class="logo-icon" />
+            <img src="images/deckman-mascot.png" alt="Deckman" class="logo-icon" />
             Deckman
           </a>
           <p>The Deckman — Neil Paz. Serving the Montreal area for 30+ years. 1,000+ builds and counting.</p>
