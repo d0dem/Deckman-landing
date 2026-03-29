@@ -1575,7 +1575,13 @@
             <textarea name="message" class="form-control" rows="3" placeholder="Tell us about your project..."></textarea>
           </div>
           <input type="hidden" name="utm_source" />
+          <input type="hidden" name="utm_medium" />
           <input type="hidden" name="utm_campaign" />
+          <input type="hidden" name="utm_content" />
+          <input type="hidden" name="utm_term" />
+          <input type="hidden" name="device" />
+          <input type="hidden" name="network" />
+          <input type="hidden" name="matchtype" />
           <input type="hidden" name="gclid" />
           <input type="hidden" name="timestamp" />
           <button type="submit" class="form-submit">Get My Free Quote →</button>
@@ -1822,12 +1828,13 @@
       });
     });
 
-    // Populate hidden UTM + GCLID fields from URL params
+    // Populate hidden tracking fields from URL params
     (function() {
       const params = new URLSearchParams(window.location.search);
       const form = document.getElementById('lead-form');
       if (!form) return;
-      ['utm_source', 'utm_campaign', 'gclid'].forEach(key => {
+      ['utm_source','utm_medium','utm_campaign','utm_content','utm_term',
+       'device','network','matchtype','gclid'].forEach(function(key) {
         const el = form.querySelector('[name="' + key + '"]');
         if (el && params.get(key)) el.value = params.get(key);
       });
@@ -1872,8 +1879,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
-        btn.textContent = '✓ Sent! We\'ll be in touch within 24 hours.';
-        btn.style.background = '#1b4332';
+        window.location.href = '/thank-you';
       } catch (err) {
         btn.textContent = 'Something went wrong. Please call us.';
         btn.style.background = '#c0392b';
