@@ -39,7 +39,7 @@
     }
 
     /* ── STICKY HEADER ── */
-    :root { --nav-height: 72px; }
+    :root { --nav-height: 84px; }
 
     .site-header {
       position: sticky;
@@ -67,7 +67,7 @@
     }
 
     .logo-icon {
-      width: 75px;
+      width: 100px;
       height: auto;
       max-height: calc(var(--nav-height) - 12px);
       object-fit: contain;
@@ -76,8 +76,22 @@
     .header-right {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
     }
+
+    .header-phone {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .header-phone:hover { color: var(--green); }
+    .header-phone svg { color: var(--green); flex-shrink: 0; }
+    .header-phone .phone-text { display: inline; }
 
 
     /* Shared phone link style — used in form sidebar and footer */
@@ -1007,6 +1021,7 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       /* Header */
+      .header-phone .phone-text { display: none; }
       .btn.btn-primary { font-size: 0.8rem; padding: 9px 14px; }
 
       /* Hero */
@@ -1074,6 +1089,10 @@
       Deckman
     </a>
     <div class="header-right">
+      <a href="tel:5149937187" class="header-phone">
+        <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91A16 16 0 0015.1 17.92l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <span class="phone-text">(514) 993-7187</span>
+      </a>
       <a href="#quote" class="btn btn-primary">Get a Free Quote</a>
     </div>
   </header>
