@@ -669,6 +669,33 @@
     }
     .lightbox-close:hover { background: rgba(255,255,255,0.28); }
 
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #fff;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 10;
+    }
+    .lightbox-nav:hover { background: rgba(255,255,255,0.30); }
+    .lightbox-nav:disabled { opacity: 0.25; cursor: default; }
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+    @media (max-width: 500px) {
+      .lightbox-prev { left: 10px; }
+      .lightbox-next { right: 10px; }
+      .lightbox-nav { width: 44px; height: 44px; }
+    }
+
     /* ── TESTIMONIALS SLIDER ── */
     .testimonials-section { background: #F7F9F9; }
 
@@ -1244,7 +1271,7 @@
   <section class="section why-section" id="why-deckman">
     <div class="section-inner">
       <p class="section-label">Why Homeowners Choose Deckman</p>
-      <h2 class="section-title">Montreal's Most<br />Trusted Deck Builder</h2>
+      <h2 class="section-title">Experience Montreal's<br />Deck Builder</h2>
       <div class="why-grid">
         <div class="why-card">
           <div class="why-icon">
@@ -1347,7 +1374,13 @@
       <!-- Lightbox -->
       <div class="lightbox" id="lightbox">
         <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous photo">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
         <img src="" id="lightboxImg" alt="Project photo" />
+        <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next photo">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </div>
     </div>
   </section>
@@ -1663,32 +1696,54 @@
       calcLayout();
 
       // Lightbox
-      slides.forEach(slide => {
-        slide.addEventListener('click', () => {
-          lightboxImg.src = slide.dataset.src;
-          lightbox.classList.add('open');
-          document.body.style.overflow = 'hidden';
-        });
-      });
+      const lightboxPrev = document.getElementById('lightboxPrev');
+      const lightboxNext = document.getElementById('lightboxNext');
+      let lbIndex = 0;
+
+      function openLightbox(idx) {
+        lbIndex = Math.max(0, Math.min(idx, total - 1));
+        lightboxImg.src = slides[lbIndex].dataset.src;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        lightboxPrev.disabled = lbIndex === 0;
+        lightboxNext.disabled = lbIndex === total - 1;
+      }
       function closeLightbox() { lightbox.classList.remove('open'); document.body.style.overflow = ''; }
+
+      slides.forEach((slide, i) => {
+        slide.addEventListener('click', () => openLightbox(i));
+      });
+
+      lightboxPrev.addEventListener('click', e => { e.stopPropagation(); openLightbox(lbIndex - 1); });
+      lightboxNext.addEventListener('click', e => { e.stopPropagation(); openLightbox(lbIndex + 1); });
       lightboxClose.addEventListener('click', closeLightbox);
       lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-      // Swipe
+      // Swipe inside lightbox
       let startX = 0;
+      lightbox.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      lightbox.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) openLightbox(diff > 0 ? lbIndex + 1 : lbIndex - 1);
+      });
+
+      // Swipe on portfolio slider track
       track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
       track.addEventListener('touchend', e => {
         const diff = startX - e.changedTouches[0].clientX;
         if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
       });
 
-      // Arrow keys (portfolio slider)
+      // Arrow keys: lightbox when open, slider otherwise
       document.addEventListener('keydown', e => {
-        const lb = document.getElementById('lightbox');
-        if (lb && lb.classList.contains('open')) return;
-        if (e.key === 'ArrowLeft') goTo(current - 1);
-        if (e.key === 'ArrowRight') goTo(current + 1);
+        if (e.key === 'Escape') { closeLightbox(); return; }
+        if (lightbox.classList.contains('open')) {
+          if (e.key === 'ArrowLeft') openLightbox(lbIndex - 1);
+          if (e.key === 'ArrowRight') openLightbox(lbIndex + 1);
+        } else {
+          if (e.key === 'ArrowLeft') goTo(current - 1);
+          if (e.key === 'ArrowRight') goTo(current + 1);
+        }
       });
     })();
 
