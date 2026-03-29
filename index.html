@@ -161,7 +161,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(27,67,50,0.60) 0%, rgba(45,106,79,0.60) 50%, rgba(26,61,43,0.60) 100%);
+      background: linear-gradient(135deg, rgba(27,67,50,0.36) 0%, rgba(45,106,79,0.36) 50%, rgba(26,61,43,0.36) 100%);
     }
 
     .hero-inner {
@@ -174,17 +174,18 @@
     .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 20px;
-      padding: 5px 14px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+      gap: 8px;
+      background: #5AA9E6;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 18px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 20px;
-      color: rgba(255,255,255,0.9);
+      margin-bottom: 24px;
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(90,169,230,0.45);
     }
 
     .hero h1 {
@@ -364,8 +365,8 @@
 
     .services-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
       margin-top: 48px;
     }
 
@@ -380,7 +381,7 @@
 
     .service-img {
       width: 100%;
-      aspect-ratio: 4/3;
+      aspect-ratio: 16/10;
       object-fit: cover;
       display: block;
       background: var(--green);
@@ -823,6 +824,7 @@
       .hero-stats { gap: 16px; }
       .hero-stat:not(:last-child) { border-right: none; margin-right: 0; padding-right: 0; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 16px; }
       .hero-stat { min-width: 100%; }
+      .services-grid { grid-template-columns: 1fr; }
       .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
       .form-layout { grid-template-columns: 1fr; gap: 32px; }
       .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
@@ -913,44 +915,6 @@
     </div>
   </div>
 
-  <!-- WHY CHOOSE -->
-  <section class="section why-section">
-    <div class="section-inner">
-      <p class="section-label">Why Homeowners Choose Us</p>
-      <h2 class="section-title">Montreal's Most<br />Trusted Deck Builder</h2>
-      <div class="why-grid">
-        <div class="why-card">
-          <div class="why-icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          </div>
-          <h3>30+ Years Experience</h3>
-          <p>Three decades building decks, fences, railings, and pergolas across the Montreal area.</p>
-        </div>
-        <div class="why-card">
-          <div class="why-icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
-          </div>
-          <h3>Custom Designs</h3>
-          <p>Cedar, Composite, or Treated Wood. Every build is tailored to your backyard and your style.</p>
-        </div>
-        <div class="why-card">
-          <div class="why-icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-          </div>
-          <h3>Quebec Code Aware</h3>
-          <p>Licensed Montreal craftsman. We know local building codes inside out, including the 24" railing requirement.</p>
-        </div>
-        <div class="why-card">
-          <div class="why-icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          </div>
-          <h3>Fast Response</h3>
-          <p>Clear quotes, fast turnaround, and 5-star satisfaction on every project we deliver.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- SERVICES -->
   <section class="section services-section">
     <div class="section-inner">
@@ -1012,6 +976,44 @@
         </div>
         <div class="portfolio-item">
           <img src="images/portfolio-4.jpg" alt="Backyard Kitchen &amp; Deck" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.2s;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="section why-section">
+    <div class="section-inner">
+      <p class="section-label">Why Homeowners Choose Us</p>
+      <h2 class="section-title">Montreal's Most<br />Trusted Deck Builder</h2>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3>30+ Years Experience</h3>
+          <p>Three decades building decks, fences, railings, and pergolas across the Montreal area.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+          </div>
+          <h3>Custom Designs</h3>
+          <p>Cedar, Composite, or Treated Wood. Every build is tailored to your backyard and your style.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          </div>
+          <h3>Quebec Code Aware</h3>
+          <p>Licensed Montreal craftsman. We know local building codes inside out, including the 24" railing requirement.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h3>Fast Response</h3>
+          <p>Clear quotes, fast turnaround, and 5-star satisfaction on every project we deliver.</p>
         </div>
       </div>
     </div>
