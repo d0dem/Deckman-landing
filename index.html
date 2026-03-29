@@ -39,6 +39,8 @@
     }
 
     /* ── STICKY HEADER ── */
+    :root { --nav-height: 72px; }
+
     .site-header {
       position: sticky;
       top: 0;
@@ -49,7 +51,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
+      height: var(--nav-height);
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
 
@@ -65,8 +67,9 @@
     }
 
     .logo-icon {
-      width: 160px;
+      width: 75px;
       height: auto;
+      max-height: calc(var(--nav-height) - 12px);
       object-fit: contain;
     }
 
