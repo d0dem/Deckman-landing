@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Custom Deck & Fence Builder Montreal | Free Quote – Deckman</title>
   <meta name="description" content="Montreal's most trusted deck & fence builder. 30+ years, 1,000+ builds. Cedar, composite, pergolas, railings. Get a free quote today." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -39,7 +39,7 @@
     }
 
     /* ── STICKY HEADER ── */
-    :root { --nav-height: 84px; }
+    :root { --nav-height: 96px; }
 
     .site-header {
       position: sticky;
@@ -64,30 +64,34 @@
       font-weight: 800;
       font-size: 1.25rem;
       letter-spacing: -0.5px;
+      flex-shrink: 0;
     }
 
     .logo-icon {
       width: 100px;
       height: auto;
-      max-height: calc(var(--nav-height) - 12px);
+      max-height: calc(var(--nav-height) - 16px);
       object-fit: contain;
+      display: block;
     }
 
     .header-right {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
+      flex-shrink: 0;
     }
 
     .header-phone {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       font-weight: 700;
       font-size: 0.95rem;
       color: var(--text);
       text-decoration: none;
       white-space: nowrap;
+      flex-shrink: 0;
     }
     .header-phone:hover { color: var(--green); }
     .header-phone svg { color: var(--green); flex-shrink: 0; }
@@ -1020,9 +1024,15 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      /* Header */
+      /* Header — logo left, phone icon + CTA on same row */
+      :root { --nav-height: 72px; }
+      .site-header { padding: 0 16px; }
+      .logo-icon { width: 72px; }
+      .logo span { display: none; } /* hide "Deckman" text, logo image is enough */
+      .header-right { gap: 8px; }
       .header-phone .phone-text { display: none; }
-      .btn.btn-primary { font-size: 0.8rem; padding: 9px 14px; }
+      .header-phone { padding: 8px; }
+      .btn.btn-primary { font-size: 0.82rem; padding: 9px 14px; white-space: nowrap; }
 
       /* Hero */
       .hero { padding: 48px 20px 56px; }
