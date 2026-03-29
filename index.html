@@ -35,6 +35,7 @@
       background: var(--white);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     /* ── STICKY HEADER ── */
@@ -161,7 +162,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(27,67,50,0.36) 0%, rgba(45,106,79,0.36) 50%, rgba(26,61,43,0.36) 100%);
+      background: linear-gradient(135deg, rgba(0,0,0,0.33) 0%, rgba(0,0,0,0.33) 50%, rgba(0,0,0,0.33) 100%);
     }
 
     .hero-inner {
@@ -175,7 +176,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: #5AA9E6;
+      background: #E0F2E9;
       border: none;
       border-radius: 6px;
       padding: 8px 18px;
@@ -184,8 +185,8 @@
       letter-spacing: 1px;
       text-transform: uppercase;
       margin-bottom: 24px;
-      color: #fff;
-      box-shadow: 0 4px 18px rgba(90,169,230,0.45);
+      color: #2D6A4F;
+      box-shadow: 0 4px 18px rgba(224,242,233,0.3);
     }
 
     .hero h1 {
@@ -200,16 +201,17 @@
 
     .hero-sub {
       font-size: 1.15rem;
-      color: rgba(255,255,255,0.82);
+      color: rgba(255,255,255,0.96);
       margin-bottom: 12px;
-      font-weight: 500;
+      font-weight: 700;
     }
 
     .hero-tagline {
       font-size: 0.95rem;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.88);
       margin-bottom: 36px;
       font-style: italic;
+      font-weight: 500;
     }
 
     .hero-ctas {
@@ -223,7 +225,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0;
-      border-top: 1px solid rgba(255,255,255,0.15);
+      border-top: 1px solid rgba(255,255,255,0.35);
       padding-top: 32px;
     }
 
@@ -233,7 +235,7 @@
       padding-right: 32px;
     }
     .hero-stat:not(:last-child) {
-      border-right: 1px solid rgba(255,255,255,0.15);
+      border-right: 1px solid rgba(255,255,255,0.35);
       margin-right: 32px;
     }
 
@@ -317,38 +319,40 @@
     }
 
     /* ── WHY CHOOSE ── */
-    .why-section { background: var(--white); }
+    .why-section { background: var(--white); padding-top: 96px; padding-bottom: 64px; }
 
     .why-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
       margin-top: 48px;
     }
 
     .why-card {
-      background: var(--cream);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px 24px;
-      transition: box-shadow 0.2s, transform 0.2s;
+      background: none;
+      border: none;
+      border-right: 1px solid var(--border);
+      border-radius: 0;
+      padding: 8px 40px 8px 0;
+      transition: none;
     }
-    .why-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .why-card:last-child { border-right: none; padding-right: 0; padding-left: 40px; }
+    .why-card:nth-child(2) { padding-left: 40px; }
 
     .why-icon {
-      width: 46px;
-      height: 46px;
-      background: var(--green-dark);
+      width: 44px;
+      height: 44px;
+      background: var(--cream);
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 16px;
-      color: #a8e6cf;
+      color: var(--green);
     }
 
     .why-card h3 {
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 800;
       margin-bottom: 8px;
       color: var(--text);
@@ -357,7 +361,13 @@
     .why-card p {
       font-size: 0.88rem;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 600px) {
+      .why-grid { grid-template-columns: 1fr; }
+      .why-card { border-right: none; border-bottom: 1px solid var(--border); padding: 24px 0 !important; }
+      .why-card:last-child { border-bottom: none; }
     }
 
     /* ── SERVICES ── */
@@ -430,54 +440,156 @@
     }
     .service-link:hover { gap: 8px; }
 
-    /* ── PORTFOLIO ── */
+    /* ── PORTFOLIO SLIDER ── */
     .portfolio-section { background: var(--white); }
 
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
+    .slider-outer {
+      position: relative;
       margin-top: 48px;
     }
 
-    .portfolio-item {
-      border-radius: 12px;
+    .slider-wrap {
       overflow: hidden;
-      aspect-ratio: 1;
-      position: relative;
-      cursor: pointer;
+      border-radius: 12px;
     }
 
-    .portfolio-placeholder {
+    .slider-track {
+      display: flex;
+      gap: 16px;
+      transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+      will-change: transform;
+    }
+
+    .slide {
+      aspect-ratio: 5/4;
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      cursor: zoom-in;
+      flex-shrink: 0;
+    }
+
+    .slide img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .slide:hover img { transform: scale(1.04); }
+
+    .slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.20);
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    .slide-zoom-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.85);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .slide:hover .slide-zoom-icon { opacity: 1; }
+
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.92);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+      transition: background 0.15s, transform 0.15s;
+    }
+    .slider-btn:hover { background: #fff; transform: translateY(-50%) scale(1.08); }
+    .slider-btn.prev { left: -22px; }
+    .slider-btn.next { right: -22px; }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
       gap: 8px;
-      font-size: 2rem;
-      transition: transform 0.2s;
-    }
-    .portfolio-item:hover .portfolio-placeholder { transform: scale(1.04); }
-
-    .portfolio-placeholder span {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-align: center;
-      color: rgba(255,255,255,0.85);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 0 8px;
+      margin-top: 20px;
     }
 
-    .pp1 { background: linear-gradient(160deg, #5c4a2a, #3d2e14); }
-    .pp2 { background: linear-gradient(160deg, #2d5016, #1a2f0a); }
-    .pp3 { background: linear-gradient(160deg, #3d2e14, #6b4c1a); }
-    .pp4 { background: linear-gradient(160deg, #1a3d2b, #0d2318); }
+    .slider-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .slider-dot.active { background: var(--green); transform: scale(1.3); }
 
-    /* ── TESTIMONIALS ── */
-    .testimonials-section { background: var(--cream); }
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    .lightbox.open { display: flex; }
+
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 8px 60px rgba(0,0,0,0.6);
+      cursor: default;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #fff;
+      font-size: 1.8rem;
+      line-height: 1;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.28); }
+
+    /* ── TESTIMONIALS SLIDER ── */
+    .testimonials-section { background: #F7F9F9; }
 
     .rating-badge {
       display: inline-flex;
@@ -495,47 +607,120 @@
 
     .stars { color: #f59e0b; font-size: 0.95rem; }
 
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    .t-slider-outer {
+      position: relative;
+      margin-top: 0;
+    }
+
+    .t-slider-wrap {
+      overflow: hidden;
+    }
+
+    .t-slider-track {
+      display: flex;
       gap: 20px;
+      transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+      align-items: stretch;
     }
 
     .testimonial-card {
       background: var(--white);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 28px;
+      padding: 32px 28px;
       box-shadow: var(--shadow);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      height: 300px;
+      overflow: hidden;
     }
 
-    .testimonial-stars { color: #f59e0b; font-size: 1rem; margin-bottom: 12px; }
+    .testimonial-stars { color: #f59e0b; font-size: 1rem; margin-bottom: 14px; flex-shrink: 0; }
 
     .testimonial-text {
-      font-size: 0.93rem;
+      font-size: 0.91rem;
       color: var(--text);
       line-height: 1.65;
       margin-bottom: 18px;
       font-style: italic;
+      flex: 1;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 7;
+      -webkit-box-orient: vertical;
     }
 
     .testimonial-author {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: var(--text);
+      flex-shrink: 0;
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .testimonial-author svg { order: 2; flex-shrink: 0; }
+    .testimonial-author-info {
+      order: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
-    .testimonial-location {
-      font-size: 0.8rem;
+    .t-location {
+      font-size: 0.78rem;
+      font-weight: 400;
       color: var(--text-muted);
-      margin-top: 2px;
+      letter-spacing: 0.2px;
     }
+
+    .t-slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: background 0.15s, transform 0.15s;
+    }
+    .t-slider-btn:hover { background: var(--cream); transform: translateY(-50%) scale(1.08); }
+    .t-slider-btn.t-prev { left: -20px; }
+    .t-slider-btn.t-next { right: -20px; }
+
+    .t-slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+    }
+    .t-slider-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      border: none; cursor: pointer; padding: 0;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .t-slider-dot.active { background: var(--green); transform: scale(1.3); }
 
     /* ── MID CTA ── */
     .mid-cta {
       background: linear-gradient(135deg, var(--green-dark), #2d6a4f);
       color: var(--white);
-      padding: 64px 24px;
+      padding: 36px 24px;
       text-align: center;
     }
 
@@ -704,6 +889,7 @@
       border-color: var(--green);
       box-shadow: 0 0 0 3px rgba(45,106,79,0.12);
     }
+    textarea.form-control { resize: vertical; min-height: 80px; }
 
     select.form-control {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a5a5a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -819,23 +1005,62 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
+      /* Header */
       .header-phone span { display: none; }
-      .hero { padding: 56px 20px 64px; }
-      .hero-stats { gap: 16px; }
-      .hero-stat:not(:last-child) { border-right: none; margin-right: 0; padding-right: 0; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 16px; }
-      .hero-stat { min-width: 100%; }
-      .services-grid { grid-template-columns: 1fr; }
-      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* Hero */
+      .hero { padding: 48px 20px 56px; }
+      .hero h1 { letter-spacing: -1px; }
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas .btn-primary-lg,
+      .hero-ctas .btn-outline-lg { width: 100%; justify-content: center; }
+      .hero-stats { flex-direction: column; gap: 0; padding-top: 24px; }
+      .hero-stat { min-width: 0; width: 100%; padding-right: 0; flex: none; }
+      .hero-stat:not(:last-child) { border-right: none; margin-right: 0; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 16px; margin-bottom: 16px; }
+
+      /* Why */
+      .why-section { padding-top: 56px; padding-bottom: 48px; }
+      .why-grid { margin-top: 32px; }
+
+      /* Sections */
+      .section { padding: 56px 20px; }
+
+      /* Services */
+      .services-grid { grid-template-columns: 1fr; gap: 16px; }
+
+      /* Portfolio slider arrows */
+      .slider-btn.prev { left: 4px; }
+      .slider-btn.next { right: 4px; }
+
+      /* Testimonial slider arrows */
+      .t-slider-btn.t-prev { left: 4px; }
+      .t-slider-btn.t-next { right: 4px; }
+
+      /* Form */
       .form-layout { grid-template-columns: 1fr; gap: 32px; }
+      .form-row { grid-template-columns: 1fr; }
+      .mascot-wrap { display: none; }
+
+      /* Footer */
       .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
       .footer-brand { grid-column: 1 / -1; }
       .floating-cta { display: block; }
-      .form-row { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 500px) {
+      /* Portfolio: 1-up on small phones */
+      .slider-btn.prev { left: 2px; }
+      .slider-btn.next { right: 2px; }
+      .t-slider-btn.t-prev { left: 2px; }
+      .t-slider-btn.t-next { right: 2px; }
+
+      /* Footer */
       .footer-top { grid-template-columns: 1fr; }
-      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* Mid CTA buttons */
+      .mid-cta-btns { flex-direction: column; align-items: center; }
+      .mid-cta-btns .btn-white-lg,
+      .mid-cta-btns .btn-outline-white-lg { width: 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -864,7 +1089,7 @@
         Montreal's #1 Deck Builder
       </div>
       <h1>Custom Deck &amp; Fence<br />Builder in <span>Montreal</span></h1>
-      <p class="hero-sub">Decks &bull; Railings &bull; Fences &amp; Gates &bull; Pergolas &mdash; 30+ years. 1,000+ builds.</p>
+      <p class="hero-sub">Decks &bull; Railings &bull; Fences &amp; Gates &bull; Pergolas</p>
       <p class="hero-tagline">Built straight. Built safe. Built to last through Montreal seasons.</p>
       <div class="hero-ctas">
         <a href="#quote" class="btn btn-primary-lg">
@@ -885,10 +1110,6 @@
           <div class="hero-stat-num">1,000+</div>
           <div class="hero-stat-label">Builds Completed</div>
         </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num">5★</div>
-          <div class="hero-stat-label">Client Rating</div>
-        </div>
       </div>
     </div>
   </section>
@@ -906,7 +1127,7 @@
       </div>
       <div class="trust-item">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        Licensed Montreal Craftsman
+        Local Montreal Craftsman
       </div>
       <div class="trust-item">
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -914,6 +1135,36 @@
       </div>
     </div>
   </div>
+
+  <section class="section why-section" id="why-deckman">
+    <div class="section-inner">
+      <p class="section-label">Why Homeowners Choose Deckman</p>
+      <h2 class="section-title">Montreal's Most<br />Trusted Deck Builder</h2>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <h3>30+ Years of Experience</h3>
+          <p>Three decades building decks, fences, railings, and pergolas across the Montreal area. Over 1,000 builds and counting.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+          </div>
+          <h3>Custom Designs</h3>
+          <p>Cedar, composite, or treated wood. Every build is tailored to your backyard, your style, and your budget.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3>Built to Last</h3>
+          <p>Quebec winters are tough. Every project is built to code, with materials and craftsmanship that stand the test of time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- SERVICES -->
   <section class="section services-section">
@@ -927,7 +1178,6 @@
           <div class="service-body">
             <h3>Decking</h3>
             <p>Cedar, Composite, or Treated Wood. We build elevated and ground-level decks that expand your outdoor living space.</p>
-            <a href="#quote" class="service-link">Get a Free Quote <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
           </div>
         </div>
         <div class="service-card">
@@ -935,7 +1185,6 @@
           <div class="service-body">
             <h3>Fences &amp; Gates</h3>
             <p>Privacy panels, decorative cedar fences, and gated entrances. Precision craftsmanship matched to your home.</p>
-            <a href="#quote" class="service-link">Get a Free Quote <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
           </div>
         </div>
         <div class="service-card">
@@ -943,7 +1192,6 @@
           <div class="service-body">
             <h3>Pergolas</h3>
             <p>Custom shade structures, freestanding or attached, built to create the perfect outdoor retreat.</p>
-            <a href="#quote" class="service-link">Get a Free Quote <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
           </div>
         </div>
         <div class="service-card">
@@ -951,70 +1199,62 @@
           <div class="service-body">
             <h3>Railings</h3>
             <p>Code-compliant railings meeting Quebec's 24" requirement. Aluminum, glass, wood, and composite options.</p>
-            <a href="#quote" class="service-link">Get a Free Quote <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PORTFOLIO -->
+  <!-- SERVICE CTA BANNER -->
+  <section class="mid-cta">
+    <h2>Ready to Transform Your Backyard?</h2>
+    <p>Get a free, no-obligation quote from Montreal's most experienced deck builder.</p>
+    <div class="mid-cta-btns">
+      <a href="#quote" class="btn btn-white-lg">Get Your Free Quote</a>
+      <a href="tel:5149937187" class="btn btn-outline-white-lg">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 1h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91A16 16 0 0015.1 17.92l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        (514) 993-7187
+      </a>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO SLIDER -->
   <section class="section portfolio-section">
     <div class="section-inner">
       <p class="section-label">Our Work</p>
       <h2 class="section-title">Real Projects.<br />Real Results.</h2>
       <p class="section-sub">Recent builds across the Montreal area.</p>
-      <div class="portfolio-grid">
-        <div class="portfolio-item">
-          <img src="images/portfolio-1.jpg" alt="Multi-Level Cedar Deck" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.2s;" />
-        </div>
-        <div class="portfolio-item">
-          <img src="images/portfolio-2.jpg" alt="Composite Deck &amp; Pergola" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.2s;" />
-        </div>
-        <div class="portfolio-item">
-          <img src="images/portfolio-3.jpg" alt="Cedar Fence &amp; Gate" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.2s;" />
-        </div>
-        <div class="portfolio-item">
-          <img src="images/portfolio-4.jpg" alt="Backyard Kitchen &amp; Deck" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.2s;" />
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- WHY CHOOSE -->
-  <section class="section why-section">
-    <div class="section-inner">
-      <p class="section-label">Why Homeowners Choose Us</p>
-      <h2 class="section-title">Montreal's Most<br />Trusted Deck Builder</h2>
-      <div class="why-grid">
-        <div class="why-card">
-          <div class="why-icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <div class="slider-outer">
+        <div class="slider-wrap">
+          <div class="slider-track" id="sliderTrack">
+            <div class="slide" data-src="images/portfolio/1-deck.jpg"><img src="images/portfolio/1-deck.jpg" alt="Project 1" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+<div class="slide" data-src="images/portfolio/3-deck.jpg"><img src="images/portfolio/3-deck.jpg" alt="Project 3" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/4-deck.jpg"><img src="images/portfolio/4-deck.jpg" alt="Project 4" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/5-deck.jpg"><img src="images/portfolio/5-deck.jpg" alt="Project 5" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/6-deck.jpg"><img src="images/portfolio/6-deck.jpg" alt="Project 6" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/6-minasdasd.jpg"><img src="images/portfolio/6-minasdasd.jpg" alt="Project 7" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/7-deck.jpg"><img src="images/portfolio/7-deck.jpg" alt="Project 8" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/8-deck.jpg"><img src="images/portfolio/8-deck.jpg" alt="Project 9" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/9-fence.jpg"><img src="images/portfolio/9-fence.jpg" alt="Project 10" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/10-top.jpg"><img src="images/portfolio/10-top.jpg" alt="Project 11" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/11-fen.jpg"><img src="images/portfolio/11-fen.jpg" alt="Project 12" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/12-fen.jpg"><img src="images/portfolio/12-fen.jpg" alt="Project 13" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
           </div>
-          <h3>30+ Years Experience</h3>
-          <p>Three decades building decks, fences, railings, and pergolas across the Montreal area.</p>
         </div>
-        <div class="why-card">
-          <div class="why-icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
-          </div>
-          <h3>Custom Designs</h3>
-          <p>Cedar, Composite, or Treated Wood. Every build is tailored to your backyard and your style.</p>
-        </div>
-        <div class="why-card">
-          <div class="why-icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-          </div>
-          <h3>Quebec Code Aware</h3>
-          <p>Licensed Montreal craftsman. We know local building codes inside out, including the 24" railing requirement.</p>
-        </div>
-        <div class="why-card">
-          <div class="why-icon">
-            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          </div>
-          <h3>Fast Response</h3>
-          <p>Clear quotes, fast turnaround, and 5-star satisfaction on every project we deliver.</p>
-        </div>
+        <button class="slider-btn prev" id="sliderPrev" aria-label="Previous">
+          <svg width="20" height="20" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="slider-btn next" id="sliderNext" aria-label="Next">
+          <svg width="20" height="20" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+      <div class="slider-dots" id="sliderDots"></div>
+
+      <!-- Lightbox -->
+      <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img src="" id="lightboxImg" alt="Project photo" />
       </div>
     </div>
   </section>
@@ -1024,30 +1264,88 @@
     <div class="section-inner">
       <p class="section-label">Testimonials</p>
       <h2 class="section-title">What Our Clients Say</h2>
-      <div class="rating-badge">
-        <span class="stars">★★★★★</span>
-        <strong>5.0</strong> &mdash; Google Rating
+      <div class="t-slider-outer">
+        <div class="t-slider-wrap">
+          <div class="t-slider-track" id="tSliderTrack">
+
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"I couldn't be happier with the incredible job Neil and the team at Deck Man did on my new deck! From start to finish, Neil was professional, communicative, and clearly passionate about his craft. The quality of the materials and workmanship exceeded my expectations, and the finished product is not only beautiful but also built to last."</p>
+              <div class="testimonial-author"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="testimonial-author-info">Alexi Stefanatos<span class="t-location">Montreal, QC</span></div></div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"I hired Neil and his team a few years ago to build our backyard deck and I couldn't be happier with the result. The craftsmanship was excellent from day one and years later, the deck still looks and feels as solid as ever. It's a true testament to the quality of work and materials. Professional, reliable and clearly takes pride in their work. Highly recommended!"</p>
+              <div class="testimonial-author"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="testimonial-author-info">Ashlee Wismach<span class="t-location">Montreal, QC</span></div></div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Neil and his team built a large extension to our deck last summer. He did a great job and was less expensive than other quotes. He arrived when he was scheduled and completed the work very quickly. I would highly recommend him."</p>
+              <div class="testimonial-author"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="testimonial-author-info">John Parker<span class="t-location">Montreal, QC</span></div></div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"The Deckman built a deck for me in 2004. The deck was so beautiful and well made that even the tradesmen, plumbers, electricians and carpenters were extremely impressed. It is now 2025 and my deck is not only standing but still fantastic. I found his price very reasonable and the execution of the project totally professional."</p>
+              <div class="testimonial-author"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="testimonial-author-info">Gary Munden<span class="t-location">Montreal, QC</span></div></div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Just want to say how pleased I am with my deck. Neil and his crew were so professional and built the deck to all my artistic expectations. They were a pleasure to deal with all around."</p>
+              <div class="testimonial-author"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="testimonial-author-info">Victoria LeBlanc<span class="t-location">Montreal, QC</span></div></div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Neil has done the backyard deck at both my homes over the years, couldn't be happier, highly highly recommend him, extremely professional and an all around great person."</p>
+              <div class="testimonial-author"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="testimonial-author-info">Chris Leech<span class="t-location">Montreal, QC</span></div></div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"The Deckman has built multiple decks for me over the years, both residential and commercial. Built in 2006, this deck sees more traffic in a single day than many residential decks would see in a lifetime — and it's still there. Deckman works quickly, efficiently and leaves behind beautiful and enduring pieces that will last. 5 stars because Google won't let me leave 6/5."</p>
+              <div class="testimonial-author"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="testimonial-author-info">Chris Coughlin<span class="t-location">Montreal, QC</span></div></div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"My yard is now an oasis with two distinct areas: an open deck (ideal for morning coffee) and a covered patio (perfect for entertaining family and friends). Thanks to Neil's help, it truly feels like a backyard retreat."</p>
+              <div class="testimonial-author"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="testimonial-author-info">Mona Andrei<span class="t-location">Montreal, QC</span></div></div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"We had a deck built four years ago by them and it still looks like the day it was installed. It has not moved an inch and in my area of Pointe-Claire, that is saying a lot. Professional workers. I have hired them to do other jobs as well. I would recommend 1000%."</p>
+              <div class="testimonial-author"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="testimonial-author-info">Mike St Laurent<span class="t-location">Pointe-Claire, QC</span></div></div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Deck Man built our side deck with a solid covered pergola which exceeded all of our expectations, he communicated all throughout design and execution and we couldn't be happier with the outcome. 10/10."</p>
+              <div class="testimonial-author"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="testimonial-author-info">Cassandra Sheffren<span class="t-location">Montreal, QC</span></div></div>
+            </div>
+
+            <div class="testimonial-card">
+              <div class="testimonial-stars">★★★★★</div>
+              <p class="testimonial-text">"Great work, reliable and amazing communication. From start to finish he was clean and professional with the service he offers. Showed up on time and was extremely polite. Would recommend."</p>
+              <div class="testimonial-author"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg><div class="testimonial-author-info">Dylan Cussen<span class="t-location">Montreal, QC</span></div></div>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="t-slider-btn t-prev" id="tSliderPrev" aria-label="Previous">
+          <svg width="18" height="18" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="t-slider-btn t-next" id="tSliderNext" aria-label="Next">
+          <svg width="18" height="18" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </div>
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Neil exceeded my expectations by a longshot. The quality of the deck and railings is outstanding. I would highly recommend Deckman to anyone in Montreal!"</p>
-          <div class="testimonial-author">John O.</div>
-          <div class="testimonial-location">Laval, QC</div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"Amazing job on my privacy wall and deck. Professional, on time, and the craftsmanship is second to none. Our backyard is completely transformed."</p>
-          <div class="testimonial-author">Lana V.</div>
-          <div class="testimonial-location">West Island, QC</div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-stars">★★★★★</div>
-          <p class="testimonial-text">"We had a pergola and deck built by Deckman and couldn't be happier. Neil was great to work with from start to finish. Highly recommend!"</p>
-          <div class="testimonial-author">Marc D.</div>
-          <div class="testimonial-location">Montreal, QC</div>
-        </div>
-      </div>
+
+      <div class="t-slider-dots" id="tSliderDots"></div>
     </div>
   </section>
 
@@ -1078,7 +1376,7 @@
           </div>
           <div>
             <span class="form-contact-label">Owner</span>
-            Neil Paz — The Deckman
+            Neil Paz, The Deckman
           </div>
         </div>
 
@@ -1124,7 +1422,7 @@
         <h3>Get My Free Quote</h3>
         <p class="form-card-sub">No obligation. We typically respond within 24 hours.</p>
 
-        <form action="#" method="POST">
+        <form id="lead-form">
           <div class="form-group">
             <label>Full Name <span class="req">*</span></label>
             <input type="text" name="name" class="form-control" placeholder="Jane Smith" required />
@@ -1135,32 +1433,34 @@
               <input type="tel" name="phone" class="form-control" placeholder="(514) 000-0000" required />
             </div>
             <div class="form-group">
-              <label>Email</label>
-              <input type="email" name="email" class="form-control" placeholder="you@email.com" />
+              <label>Email <span class="req">*</span></label>
+              <input type="email" name="email" class="form-control" placeholder="you@email.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Service Needed</label>
+              <select name="service" class="form-control">
+                <option value="" disabled selected>Select a service</option>
+                <option>Deck</option>
+                <option>Fence</option>
+                <option>Pergola</option>
+                <option>Railing</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Postal Code</label>
+              <input type="text" name="postal_code" class="form-control" placeholder="H3A 1A1" />
             </div>
           </div>
           <div class="form-group">
-            <label>Project Type</label>
-            <select name="project_type" class="form-control">
-              <option value="" disabled selected>Select a project type</option>
-              <option>Deck</option>
-              <option>Fence</option>
-              <option>Pergola</option>
-              <option>Railing</option>
-              <option>Outdoor Kitchen</option>
-              <option>Other</option>
-            </select>
+            <label>Message (optional)</label>
+            <textarea name="message" class="form-control" rows="3" placeholder="Tell us about your project..."></textarea>
           </div>
-          <div class="form-group">
-            <label>Estimated Budget (optional)</label>
-            <select name="budget" class="form-control">
-              <option value="" disabled selected>Select a range</option>
-              <option>Under $5,000</option>
-              <option>$5,000 – $10,000</option>
-              <option>$10,000 – $20,000</option>
-              <option>$20,000+</option>
-            </select>
-          </div>
+          <input type="hidden" name="utm_source" />
+          <input type="hidden" name="utm_campaign" />
+          <input type="hidden" name="gclid" />
           <button type="submit" class="form-submit">Get My Free Quote →</button>
           <p class="form-note">
             <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1180,7 +1480,7 @@
             <img src="images/deckman-mascot.png" alt="Deckman" class="logo-icon" />
             Deckman
           </a>
-          <p>The Deckman — Neil Paz. Serving the Montreal area for 30+ years. 1,000+ builds and counting.</p>
+          <p>The Deckman, Neil Paz. Serving the Montreal area for 30+ years. 1,000+ builds and counting.</p>
         </div>
         <div class="footer-col">
           <h4>Services</h4>
@@ -1236,13 +1536,182 @@
       });
     });
 
-    // Simple form handler (replace with real backend)
-    document.querySelector('form').addEventListener('submit', e => {
+    // ── PORTFOLIO SLIDER ──
+    (function() {
+      const wrap    = document.querySelector('.slider-wrap');
+      const track   = document.getElementById('sliderTrack');
+      const slides  = Array.from(track.querySelectorAll('.slide'));
+      const total   = slides.length;
+      const GAP     = 16;
+      const prevBtn = document.getElementById('sliderPrev');
+      const nextBtn = document.getElementById('sliderNext');
+      const dotsWrap= document.getElementById('sliderDots');
+      const lightbox    = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const lightboxClose = document.getElementById('lightboxClose');
+      let current = 0;
+      let perView = 3;
+      let slideW  = 0;
+
+      function calcLayout() {
+        perView = window.innerWidth <= 500 ? 1 : window.innerWidth <= 768 ? 2 : 3;
+        const wrapW = wrap.offsetWidth;
+        slideW = (wrapW - GAP * (perView - 1)) / perView;
+        slides.forEach(s => { s.style.width = slideW + 'px'; s.style.minWidth = slideW + 'px'; });
+        // rebuild dots
+        dotsWrap.innerHTML = '';
+        const maxIdx = total - perView;
+        for (let i = 0; i <= maxIdx; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'slider-dot' + (i === 0 && current === 0 ? ' active' : '');
+          dot.setAttribute('aria-label', 'Go to ' + (i + 1));
+          dot.addEventListener('click', () => goTo(i));
+          dotsWrap.appendChild(dot);
+        }
+        goTo(current, true);
+      }
+
+      function goTo(idx, skipAnim) {
+        const maxIdx = total - perView;
+        current = Math.max(0, Math.min(idx, maxIdx));
+        if (skipAnim) track.style.transition = 'none';
+        track.style.transform = 'translateX(-' + (current * (slideW + GAP)) + 'px)';
+        if (skipAnim) requestAnimationFrame(() => track.style.transition = '');
+        dotsWrap.querySelectorAll('.slider-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+        prevBtn.style.opacity = current === 0 ? '0.35' : '1';
+        nextBtn.style.opacity = current >= maxIdx ? '0.35' : '1';
+      }
+
+      prevBtn.addEventListener('click', () => goTo(current - 1));
+      nextBtn.addEventListener('click', () => goTo(current + 1));
+      window.addEventListener('resize', calcLayout);
+      calcLayout();
+
+      // Lightbox
+      slides.forEach(slide => {
+        slide.addEventListener('click', () => {
+          lightboxImg.src = slide.dataset.src;
+          lightbox.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+      function closeLightbox() { lightbox.classList.remove('open'); document.body.style.overflow = ''; }
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+      // Swipe
+      let startX = 0;
+      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+      });
+
+      // Arrow keys (portfolio slider)
+      document.addEventListener('keydown', e => {
+        const lb = document.getElementById('lightbox');
+        if (lb && lb.classList.contains('open')) return;
+        if (e.key === 'ArrowLeft') goTo(current - 1);
+        if (e.key === 'ArrowRight') goTo(current + 1);
+      });
+    })();
+
+    // ── TESTIMONIAL SLIDER ──
+    (function() {
+      const wrap    = document.querySelector('.t-slider-wrap');
+      const track   = document.getElementById('tSliderTrack');
+      const cards   = Array.from(track.querySelectorAll('.testimonial-card'));
+      const total   = cards.length;
+      const GAP     = 20;
+      const prevBtn = document.getElementById('tSliderPrev');
+      const nextBtn = document.getElementById('tSliderNext');
+      const dotsWrap= document.getElementById('tSliderDots');
+      let current = 0;
+      let perView = 3;
+      let cardW = 0;
+
+      function calcLayout() {
+        perView = window.innerWidth <= 600 ? 1 : window.innerWidth <= 900 ? 2 : 3;
+        const wrapW = wrap.offsetWidth;
+        cardW = (wrapW - GAP * (perView - 1)) / perView;
+        cards.forEach(c => { c.style.width = cardW + 'px'; c.style.minWidth = cardW + 'px'; });
+        dotsWrap.innerHTML = '';
+        const maxIdx = total - perView;
+        for (let i = 0; i <= maxIdx; i++) {
+          const dot = document.createElement('button');
+          dot.className = 't-slider-dot' + (i === current ? ' active' : '');
+          dot.setAttribute('aria-label', 'Go to ' + (i + 1));
+          dot.addEventListener('click', () => goTo(i));
+          dotsWrap.appendChild(dot);
+        }
+        goTo(current, true);
+      }
+
+      function goTo(idx, skipAnim) {
+        const maxIdx = total - perView;
+        current = Math.max(0, Math.min(idx, maxIdx));
+        if (skipAnim) track.style.transition = 'none';
+        track.style.transform = 'translateX(-' + (current * (cardW + GAP)) + 'px)';
+        if (skipAnim) requestAnimationFrame(() => track.style.transition = '');
+        dotsWrap.querySelectorAll('.t-slider-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+        prevBtn.style.opacity = current === 0 ? '0.35' : '1';
+        nextBtn.style.opacity = current >= maxIdx ? '0.35' : '1';
+      }
+
+      prevBtn.addEventListener('click', () => goTo(current - 1));
+      nextBtn.addEventListener('click', () => goTo(current + 1));
+      window.addEventListener('resize', calcLayout);
+      calcLayout();
+
+      // Arrow keys (testimonial slider — only when no lightbox open)
+      document.addEventListener('keydown', e => {
+        const lb = document.getElementById('lightbox');
+        if (lb && lb.classList.contains('open')) return;
+        if (e.key === 'ArrowLeft') goTo(current - 1);
+        if (e.key === 'ArrowRight') goTo(current + 1);
+      });
+
+      // Swipe
+      let startX = 0;
+      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(diff > 0 ? current + 1 : current - 1);
+      });
+    })();
+
+    // Populate hidden UTM + GCLID fields from URL params
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const form = document.getElementById('lead-form');
+      if (!form) return;
+      ['utm_source', 'utm_campaign', 'gclid'].forEach(key => {
+        const el = form.querySelector('[name="' + key + '"]');
+        if (el && params.get(key)) el.value = params.get(key);
+      });
+    })();
+
+    // Lead form submission to Make webhook
+    document.getElementById('lead-form').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('.form-submit');
-      btn.textContent = '✓ Sent! We\'ll be in touch within 24 hours.';
-      btn.style.background = '#1b4332';
+      const btn = this.querySelector('.form-submit');
+      btn.textContent = 'Sending...';
       btn.disabled = true;
+      const data = Object.fromEntries(new FormData(this).entries());
+      try {
+        await fetch('https://hook.us2.make.com/y91uvfma55xyacbel77zr6ramtunaiio', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        btn.textContent = '✓ Sent! We\'ll be in touch within 24 hours.';
+        btn.style.background = '#1b4332';
+      } catch (err) {
+        btn.textContent = 'Something went wrong. Please call us.';
+        btn.style.background = '#c0392b';
+        btn.disabled = false;
+      }
     });
   </script>
 </body>
