@@ -1,0 +1,10 @@
+{
+  "name": "deckman-landing",
+  "version": "1.0.0",
+  "description": "Deckman - Montreal's Premier Deck and Fence Builder",
+  "private": true,
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  }
+}
