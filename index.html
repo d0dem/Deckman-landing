@@ -72,7 +72,8 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
       transition: transform 0.25s ease;
     }
-    .site-header.nav-hidden { pointer-events: none; }
+    .site-header.nav-hidden { pointer-events: none; visibility: hidden; }
+    .site-header.nav-showing { pointer-events: none; }
 
     .logo {
       display: flex;
@@ -1896,18 +1897,26 @@
       let transitionTimer = null;
 
       function showHeader() {
-        header.style.transform = '';
-        // Re-enable pointer-events after transition completes (250ms)
         clearTimeout(transitionTimer);
+        // Remove nav-hidden immediately so visibility:hidden is gone and slide-in is visible
+        header.classList.remove('nav-hidden');
+        // nav-showing blocks pointer-events only during the transition
+        header.classList.add('nav-showing');
+        header.style.transform = '';
+        // After transition completes, allow pointer-events
         transitionTimer = setTimeout(function() {
-          header.classList.remove('nav-hidden');
+          header.classList.remove('nav-showing');
         }, 260);
       }
 
       function hideHeader() {
-        header.classList.add('nav-hidden');
-        header.style.transform = 'translateY(-100%)';
         clearTimeout(transitionTimer);
+        header.classList.remove('nav-showing');
+        header.style.transform = 'translateY(-100%)';
+        // Add nav-hidden (visibility:hidden) after transition so it doesn't interrupt slide-out
+        transitionTimer = setTimeout(function() {
+          header.classList.add('nav-hidden');
+        }, 260);
       }
 
       function onScroll() {
