@@ -554,6 +554,8 @@
       gap: 16px;
       transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
       will-change: transform;
+      /* Prevent track from ever expanding taller than the viewport before JS fires */
+      max-height: 80vw;
     }
 
     .slide {
@@ -563,6 +565,17 @@
       border-radius: 10px;
       cursor: zoom-in;
       flex-shrink: 0;
+      /* CSS fallback widths before JS sets precise pixel values */
+      width: calc((100% - 32px) / 3);
+      min-width: calc((100% - 32px) / 3);
+    }
+    @media (max-width: 768px) {
+      .slide { width: calc(50% - 8px); min-width: calc(50% - 8px); }
+      .slider-track { max-height: 60vw; }
+    }
+    @media (max-width: 500px) {
+      .slide { width: 100%; min-width: 100%; }
+      .slider-track { max-height: 85vw; }
     }
 
     .slide img {
@@ -1714,7 +1727,9 @@
       prevBtn.addEventListener('click', () => goTo(current - 1));
       nextBtn.addEventListener('click', () => goTo(current + 1));
       window.addEventListener('resize', calcLayout);
+      // Run immediately; retry on next frame if wrap hasn't painted yet (offsetWidth=0)
       calcLayout();
+      if (!wrap.offsetWidth) requestAnimationFrame(calcLayout);
 
       // Lightbox
       const lightboxPrev = document.getElementById('lightboxPrev');
@@ -1859,18 +1874,33 @@
     (function() {
       const header = document.getElementById('siteHeader');
       const bottomCta = document.getElementById('mobileBottomCta');
-      let lastY = 0;
+      let formFocused = false;
+
+      // Hide bottom CTA when any form field is focused
+      document.getElementById('lead-form').addEventListener('focusin', function() {
+        formFocused = true;
+        bottomCta.classList.remove('visible');
+      });
+      document.getElementById('lead-form').addEventListener('focusout', function() {
+        // Small delay so CTA doesn't flash between field tabs
+        setTimeout(function() {
+          if (!document.activeElement || !document.getElementById('lead-form').contains(document.activeElement)) {
+            formFocused = false;
+            if (window.scrollY > 80) bottomCta.classList.add('visible');
+          }
+        }, 100);
+      });
+
       function onScroll() {
         if (window.innerWidth > 768) return;
         const y = window.scrollY;
         if (y > 80) {
           header.style.transform = 'translateY(-100%)';
-          bottomCta.classList.add('visible');
+          if (!formFocused) bottomCta.classList.add('visible');
         } else {
           header.style.transform = '';
           bottomCta.classList.remove('visible');
         }
-        lastY = y;
       }
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll, { passive: true });
