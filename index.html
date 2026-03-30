@@ -71,6 +71,7 @@
       height: var(--nav-height);
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
       transition: transform 0.25s ease;
+      transition: transform 0.25s ease;
     }
 
     .logo {
@@ -1891,16 +1892,25 @@
         }, 100);
       });
 
+      let lastY = window.scrollY;
       function onScroll() {
         if (window.innerWidth > 768) return;
         const y = window.scrollY;
-        if (y > 80) {
-          header.style.transform = 'translateY(-100%)';
-          if (!formFocused) bottomCta.classList.add('visible');
-        } else {
+        const scrollingUp = y < lastY;
+        if (y <= 80) {
+          // At top — always show header, hide bottom CTA
           header.style.transform = '';
           bottomCta.classList.remove('visible');
+        } else if (scrollingUp) {
+          // Scrolling up — reveal header, hide bottom CTA
+          header.style.transform = '';
+          if (!formFocused) bottomCta.classList.remove('visible');
+        } else {
+          // Scrolling down — hide header, show bottom CTA
+          header.style.transform = 'translateY(-100%)';
+          if (!formFocused) bottomCta.classList.add('visible');
         }
+        lastY = y;
       }
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll, { passive: true });
