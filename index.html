@@ -20,9 +20,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
   <title>Custom Deck & Fence Builder Montreal | Free Quote – Deckman</title>
   <meta name="description" content="Montreal's most trusted deck & fence builder. 30+ years, 1,000+ builds. Cedar, composite, pergolas, railings. Get a free quote today." />
+  <!-- Preload hero images (LCP) with high priority -->
+  <link rel="preload" as="image" href="images/hero-deck.webp" media="(min-width: 769px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="images/hero-deck-mobile.webp" media="(max-width: 768px)" fetchpriority="high" />
+  <!-- Non-blocking Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" /></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -250,7 +255,7 @@
     /* ── HERO ── */
     .hero {
       position: relative;
-      background: url("images/hero-deck.jpg") center/cover no-repeat;
+      background: url("images/hero-deck.webp") center/cover no-repeat;
       color: var(--white);
       padding: 80px 24px 90px;
       overflow: hidden;
@@ -1158,7 +1163,7 @@
       .btn.btn-primary { font-size: 0.82rem; padding: 9px 14px; white-space: nowrap; }
 
       /* Hero */
-      .hero { padding: 48px 20px 56px; background-image: url("images/hero-deck-mobile.jpg"); background-size: cover; background-position: center center; }
+      .hero { padding: 48px 20px 56px; background-image: url("images/hero-deck-mobile.webp"); background-size: cover; background-position: center center; }
       .hero h1 { letter-spacing: -1px; }
       .hero-ctas { flex-direction: column; }
       .hero-ctas .btn-primary-lg,
@@ -1218,7 +1223,10 @@
   <!-- STICKY HEADER -->
   <header class="site-header" id="siteHeader">
     <a href="#" class="logo">
-      <img src="images/deckman-mascot.png" alt="Deckman mascot" class="logo-icon" />
+      <picture>
+        <source srcset="images/deckman-mascot.webp" type="image/webp" />
+        <img src="images/deckman-mascot.png" alt="Deckman mascot" class="logo-icon" />
+      </picture>
       <span class="logo-name">Deckman</span>
     </a>
     <div class="header-right">
@@ -1336,28 +1344,40 @@
       <p class="section-sub">From dream to reality. We handle every aspect of your outdoor build.</p>
       <div class="services-grid">
         <div class="service-card">
-          <img src="images/service-deck.jpg" alt="Decking" class="service-img" />
+          <picture>
+            <source srcset="images/service-deck.webp" type="image/webp" />
+            <img src="images/service-deck.jpg" alt="Decking" class="service-img" loading="lazy" />
+          </picture>
           <div class="service-body">
             <h3>Decking</h3>
             <p>Cedar, Composite, or Treated Wood. We build elevated and ground-level decks that expand your outdoor living space.</p>
           </div>
         </div>
         <div class="service-card">
-          <img src="images/service-fence.jpg" alt="Fences &amp; Gates" class="service-img" />
+          <picture>
+            <source srcset="images/service-fence.webp" type="image/webp" />
+            <img src="images/service-fence.jpg" alt="Fences &amp; Gates" class="service-img" loading="lazy" />
+          </picture>
           <div class="service-body">
             <h3>Fences &amp; Gates</h3>
             <p>Privacy panels, decorative cedar fences, and gated entrances. Precision craftsmanship matched to your home.</p>
           </div>
         </div>
         <div class="service-card">
-          <img src="images/service-pergola.jpg" alt="Pergolas" class="service-img" />
+          <picture>
+            <source srcset="images/service-pergola.webp" type="image/webp" />
+            <img src="images/service-pergola.jpg" alt="Pergolas" class="service-img" loading="lazy" />
+          </picture>
           <div class="service-body">
             <h3>Pergolas</h3>
             <p>Custom shade structures, freestanding or attached, built to create the perfect outdoor retreat.</p>
           </div>
         </div>
         <div class="service-card">
-          <img src="images/service-railing.jpg" alt="Railings" class="service-img" />
+          <picture>
+            <source srcset="images/service-railing.webp" type="image/webp" />
+            <img src="images/service-railing.jpg" alt="Railings" class="service-img" loading="lazy" />
+          </picture>
           <div class="service-body">
             <h3>Railings</h3>
             <p>Code-compliant railings meeting Quebec's 24" requirement. Aluminum, glass, wood, and composite options.</p>
@@ -1378,18 +1398,18 @@
       <div class="slider-outer">
         <div class="slider-wrap">
           <div class="slider-track" id="sliderTrack">
-            <div class="slide" data-src="images/portfolio/1-deck.jpg"><img src="images/portfolio/1-deck.jpg" alt="Project 1" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
-<div class="slide" data-src="images/portfolio/3-deck.jpg"><img src="images/portfolio/3-deck.jpg" alt="Project 3" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
-            <div class="slide" data-src="images/portfolio/4-deck.jpg"><img src="images/portfolio/4-deck.jpg" alt="Project 4" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
-            <div class="slide" data-src="images/portfolio/5-deck.jpg"><img src="images/portfolio/5-deck.jpg" alt="Project 5" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
-            <div class="slide" data-src="images/portfolio/6-deck.jpg"><img src="images/portfolio/6-deck.jpg" alt="Project 6" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
-            <div class="slide" data-src="images/portfolio/6-minasdasd.jpg"><img src="images/portfolio/6-minasdasd.jpg" alt="Project 7" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
-            <div class="slide" data-src="images/portfolio/7-deck.jpg"><img src="images/portfolio/7-deck.jpg" alt="Project 8" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
-            <div class="slide" data-src="images/portfolio/8-deck.jpg"><img src="images/portfolio/8-deck.jpg" alt="Project 9" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
-            <div class="slide" data-src="images/portfolio/9-fence.jpg"><img src="images/portfolio/9-fence.jpg" alt="Project 10" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
-            <div class="slide" data-src="images/portfolio/10-top.jpg"><img src="images/portfolio/10-top.jpg" alt="Project 11" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
-            <div class="slide" data-src="images/portfolio/11-fen.jpg"><img src="images/portfolio/11-fen.jpg" alt="Project 12" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
-            <div class="slide" data-src="images/portfolio/12-fen.jpg"><img src="images/portfolio/12-fen.jpg" alt="Project 13" /><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/1-deck.webp"><picture><source srcset="images/portfolio/1-deck.webp" type="image/webp" /><img src="images/portfolio/1-deck.jpg" alt="Project 1" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+<div class="slide" data-src="images/portfolio/3-deck.webp"><picture><source srcset="images/portfolio/3-deck.webp" type="image/webp" /><img src="images/portfolio/3-deck.jpg" alt="Project 3" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/4-deck.webp"><picture><source srcset="images/portfolio/4-deck.webp" type="image/webp" /><img src="images/portfolio/4-deck.jpg" alt="Project 4" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/5-deck.webp"><picture><source srcset="images/portfolio/5-deck.webp" type="image/webp" /><img src="images/portfolio/5-deck.jpg" alt="Project 5" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/6-deck.webp"><picture><source srcset="images/portfolio/6-deck.webp" type="image/webp" /><img src="images/portfolio/6-deck.jpg" alt="Project 6" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/6-minasdasd.webp"><picture><source srcset="images/portfolio/6-minasdasd.webp" type="image/webp" /><img src="images/portfolio/6-minasdasd.jpg" alt="Project 7" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/7-deck.webp"><picture><source srcset="images/portfolio/7-deck.webp" type="image/webp" /><img src="images/portfolio/7-deck.jpg" alt="Project 8" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/8-deck.webp"><picture><source srcset="images/portfolio/8-deck.webp" type="image/webp" /><img src="images/portfolio/8-deck.jpg" alt="Project 9" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/9-fence.webp"><picture><source srcset="images/portfolio/9-fence.webp" type="image/webp" /><img src="images/portfolio/9-fence.jpg" alt="Project 10" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/10-top.webp"><picture><source srcset="images/portfolio/10-top.webp" type="image/webp" /><img src="images/portfolio/10-top.jpg" alt="Project 11" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/11-fen.webp"><picture><source srcset="images/portfolio/11-fen.webp" type="image/webp" /><img src="images/portfolio/11-fen.jpg" alt="Project 12" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
+            <div class="slide" data-src="images/portfolio/12-fen.webp"><picture><source srcset="images/portfolio/12-fen.webp" type="image/webp" /><img src="images/portfolio/12-fen.jpg" alt="Project 13" loading="lazy" /></picture><div class="slide-zoom-icon"><svg width="16" height="16" fill="none" stroke="#0B0A07" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0zm-2.5 3.5L17 17"/><path d="M11 8v6M8 11h6"/></svg></div></div>
           </div>
         </div>
         <button class="slider-btn prev" id="sliderPrev" aria-label="Previous">
@@ -1557,7 +1577,10 @@
         </div>
 
         <div class="mascot-wrap">
-          <img src="images/deckman-mascot.png" alt="Neil Paz – The Deckman" class="mascot-img" />
+          <picture>
+            <source srcset="images/deckman-mascot.webp" type="image/webp" />
+            <img src="images/deckman-mascot.png" alt="Neil Paz – The Deckman" class="mascot-img" loading="lazy" />
+          </picture>
           <div class="mascot-bubble">
             "Fill out the form and I'll personally get back to you within 24 hours!"<br /><strong>— Deckman</strong>
           </div>
@@ -1626,7 +1649,10 @@
       <div class="footer-top">
         <div class="footer-brand">
           <a href="#" class="logo">
-            <img src="images/deckman-mascot.png" alt="Deckman" class="logo-icon" />
+            <picture>
+              <source srcset="images/deckman-mascot.webp" type="image/webp" />
+              <img src="images/deckman-mascot.png" alt="Deckman" class="logo-icon" />
+            </picture>
             Deckman
           </a>
           <p>The Deckman, Neil Paz. Serving the Montreal area for 30+ years. 1,000+ builds and counting.</p>
