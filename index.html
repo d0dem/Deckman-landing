@@ -71,8 +71,8 @@
       height: var(--nav-height);
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
       transition: transform 0.25s ease;
-      transition: transform 0.25s ease;
     }
+    .site-header.nav-hidden { pointer-events: none; }
 
     .logo {
       display: flex;
@@ -1893,21 +1893,35 @@
       });
 
       let lastY = window.scrollY;
+      let transitionTimer = null;
+
+      function showHeader() {
+        header.style.transform = '';
+        // Re-enable pointer-events after transition completes (250ms)
+        clearTimeout(transitionTimer);
+        transitionTimer = setTimeout(function() {
+          header.classList.remove('nav-hidden');
+        }, 260);
+      }
+
+      function hideHeader() {
+        header.classList.add('nav-hidden');
+        header.style.transform = 'translateY(-100%)';
+        clearTimeout(transitionTimer);
+      }
+
       function onScroll() {
         if (window.innerWidth > 768) return;
         const y = window.scrollY;
         const scrollingUp = y < lastY;
         if (y <= 80) {
-          // At top — always show header, hide bottom CTA
-          header.style.transform = '';
+          showHeader();
           bottomCta.classList.remove('visible');
         } else if (scrollingUp) {
-          // Scrolling up — reveal header, hide bottom CTA
-          header.style.transform = '';
+          showHeader();
           if (!formFocused) bottomCta.classList.remove('visible');
         } else {
-          // Scrolling down — hide header, show bottom CTA
-          header.style.transform = 'translateY(-100%)';
+          hideHeader();
           if (!formFocused) bottomCta.classList.add('visible');
         }
         lastY = y;
