@@ -72,7 +72,7 @@
       box-shadow: 0 2px 12px rgba(0,0,0,0.06);
       transition: transform 0.25s ease;
     }
-    .site-header.nav-hidden { pointer-events: none; visibility: hidden; }
+    .site-header.nav-hidden { pointer-events: none; }
 
     .logo {
       display: flex;
@@ -1896,14 +1896,11 @@
       let transitionTimer = null;
 
       function showHeader() {
-        // Make visible immediately so the slide-in animation is visible
-        header.style.visibility = '';
         header.style.transform = '';
         // Re-enable pointer-events after transition completes (250ms)
         clearTimeout(transitionTimer);
         transitionTimer = setTimeout(function() {
           header.classList.remove('nav-hidden');
-          header.style.visibility = '';
         }, 260);
       }
 
